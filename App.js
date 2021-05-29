@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import Header from './Containers/Header'
+import Todoitem from './Containers/todoitemp'
 
 export default function App() {
   const [todos, settodos] = useState([
@@ -8,6 +9,13 @@ export default function App() {
     {Text: 'buy tea', key: '2'},
     {Text: 'buy cold drink', key: '3'}
   ]);
+
+  const presshandler = (key) => {
+    settodos((prevTodos) => {
+      return prevTodos.filter(todos => todos.key != key);
+    })
+
+  }
 
   return (
     <View style={styles.container}>
@@ -17,7 +25,7 @@ export default function App() {
           <FlatList
             data = {todos}
             renderItem={({ item }) => (
-              <Text>{item.Text}</Text>
+              <Todoitem item = {item} presshandler={presshandler} />
             )}
           />
         </View>
@@ -31,9 +39,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderColor: 'black'
   },
   content: {
     padding: 40,
